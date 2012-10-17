@@ -45,6 +45,7 @@ import org.bukkit.plugin.UnknownDependencyException;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import com.google.common.collect.ImmutableList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a Java plugin loader, allowing plugins in the form of .jar
@@ -61,14 +62,14 @@ public class JavaPluginLoader implements PluginLoader {
     @Deprecated
     protected final Pattern[] fileFilters = fileFilters0;
 
-    private final Map<String, Class<?>> classes0 = new HashMap<String, Class<?>>();
+    private final Map<String, Class<?>> classes0 = new ConcurrentHashMap<String, Class<?>>();
     /**
      * @deprecated Internal field that wasn't intended to be exposed
      */
     @Deprecated
     protected final Map<String, Class<?>> classes = classes0;
 
-    private final Map<String, PluginClassLoader> loaders0 = new LinkedHashMap<String, PluginClassLoader>();
+    private final Map<String, PluginClassLoader> loaders0 = new ConcurrentHashMap<String, PluginClassLoader>();
     /**
      * @deprecated Internal field that wasn't intended to be exposed
      */
