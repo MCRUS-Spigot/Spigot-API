@@ -10,6 +10,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.CustomTimingsHandler;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
@@ -51,6 +52,7 @@ public class TimingsCommand extends BukkitCommand {
                     }
                 }
             }
+            CustomTimingsHandler.reload(); // Spigot
             timingStart = System.nanoTime(); // Spigot
             sender.sendMessage("Timings reset");
         } else if ("merged".equals(args[0]) || separate) {
@@ -95,8 +97,10 @@ public class TimingsCommand extends BukkitCommand {
                     }
                     fileTimings.println("    Total time " + totalTime + " (" + totalTime / 1000000000 + "s)");
                 }
+                CustomTimingsHandler.printTimings(fileTimings); // Spigot
                 fileTimings.println("Sample time " + sampleTime + " (" + sampleTime / 1000000000 + "s)"); // Spigot
                 sender.sendMessage("Timings written to " + timings.getPath());
+                sender.sendMessage("Paste contents of file into form at http://aikar.co/timings.php to read results."); // Spigot
                 if (separate) sender.sendMessage("Names written to " + names.getPath());
             } catch (IOException e) {
             } finally {
