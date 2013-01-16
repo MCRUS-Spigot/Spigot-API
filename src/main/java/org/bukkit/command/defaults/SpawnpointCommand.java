@@ -16,8 +16,8 @@ public class SpawnpointCommand extends VanillaCommand {
 
     public SpawnpointCommand() {
         super("spawnpoint");
-        this.description = "Sets a player's spawn point";
-        this.usageMessage = "/spawnpoint OR /spawnpoint <player> OR /spawnpoint <player> <x> <y> <z>";
+        this.description = "Указывает точку спавна игроков";
+        this.usageMessage = "/spawnpoint ИЛИ /spawnpoint <игрок> ИЛИ /spawnpoint <игрок> <x> <y> <z>";
         this.setPermission("bukkit.command.spawnpoint");
     }
 
@@ -31,13 +31,13 @@ public class SpawnpointCommand extends VanillaCommand {
             if (sender instanceof Player) {
                 player = (Player) sender;
             } else {
-                sender.sendMessage("Please provide a player!");
+                sender.sendMessage("Пожалуйста, укажите игрока!");
                 return true;
             }
         } else {
             player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                sender.sendMessage("Can't find player " + args[0]);
+                sender.sendMessage("Игрок " + args[0] + " не найжден.");
                 return true;
             }
         }
@@ -52,14 +52,14 @@ public class SpawnpointCommand extends VanillaCommand {
                 int z = getInteger(sender, args[pos], MIN_COORD, MAX_COORD);
 
                 player.setBedSpawnLocation(new Location(world, x, y, z), true);
-                Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + x + ", " + y + ", " + z);
+                Command.broadcastCommandMessage(sender, "Точка спавна " + player.getDisplayName() + " изменена на " + x + ", " + y + ", " + z);
             }
         } else if (args.length <= 1) {
             Location location = player.getLocation();
             player.setBedSpawnLocation(location, true);
-            Command.broadcastCommandMessage(sender, "Set " + player.getDisplayName() + "'s spawnpoint to " + location.getX() + ", " + location.getY() + ", " + location.getZ());
+            Command.broadcastCommandMessage(sender, "Точка спавна " + player.getDisplayName() + " изменена на " + location.getX() + ", " + location.getY() + ", " + location.getZ());
         } else {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 

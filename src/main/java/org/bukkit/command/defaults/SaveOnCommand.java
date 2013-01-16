@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
 public class SaveOnCommand extends VanillaCommand {
     public SaveOnCommand() {
         super("save-on");
-        this.description = "Enables server autosaving";
+        this.description = "Включает автоматическое сохранение мира на диск";
         this.usageMessage = "/save-on";
         this.setPermission("bukkit.command.save.enable");
     }
@@ -26,7 +26,7 @@ public class SaveOnCommand extends VanillaCommand {
             world.setAutoSave(true);
         }
 
-        Command.broadcastCommandMessage(sender, "Enabled level saving..");
+        Command.broadcastCommandMessage(sender, "Автоматическое сохранение мира включено.");
         return true;
     }
 

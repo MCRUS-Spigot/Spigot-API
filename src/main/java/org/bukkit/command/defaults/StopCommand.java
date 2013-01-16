@@ -15,8 +15,8 @@ import com.google.common.collect.ImmutableList;
 public class StopCommand extends VanillaCommand {
     public StopCommand() {
         super("stop");
-        this.description = "Stops the server with optional reason";
-        this.usageMessage = "/stop [reason]";
+        this.description = "Останавливает сервер с указаной причиной";
+        this.usageMessage = "/stop [причина]";
         this.setPermission("bukkit.command.stop");
     }
 
@@ -24,7 +24,7 @@ public class StopCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        Command.broadcastCommandMessage(sender, "Stopping the server..");
+        Command.broadcastCommandMessage(sender, "Остановка сервера...");
         Bukkit.shutdown();
 
         String reason = this.createString(args, 0);

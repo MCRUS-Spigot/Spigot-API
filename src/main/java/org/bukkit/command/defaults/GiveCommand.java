@@ -18,6 +18,7 @@ import com.google.common.collect.ImmutableList;
 
 public class GiveCommand extends VanillaCommand {
     private static List<String> materials;
+
     static {
         ArrayList<String> materialList = new ArrayList<String>();
         for (Material material : Material.values()) {
@@ -29,8 +30,8 @@ public class GiveCommand extends VanillaCommand {
 
     public GiveCommand() {
         super("give");
-        this.description = "Gives the specified player a certain amount of items";
-        this.usageMessage = "/give <player> <item> [amount [data]]";
+        this.description = "Выдает игроку заданное количество предметов";
+        this.usageMessage = "/give <игрок> <предмет> [количество [данные]]";
         this.setPermission("bukkit.command.give");
     }
 
@@ -38,7 +39,7 @@ public class GiveCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if ((args.length < 2)) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -57,18 +58,22 @@ public class GiveCommand extends VanillaCommand {
                     if (args.length >= 4) {
                         try {
                             data = Short.parseShort(args[3]);
-                        } catch (NumberFormatException ex) {}
+                        } catch (NumberFormatException ex) {
+                        }
                     }
                 }
 
                 player.getInventory().addItem(new ItemStack(material, amount, data));
 
-                Command.broadcastCommandMessage(sender, "Gave " + player.getName() + " some " + material.getId() + " (" + material + ")");
+                if (amount == 1)
+                    Command.broadcastCommandMessage(sender, "Игроку " + player.getName() + " был выдан предмет " + material.getId() + " (" + material + ")");
+                else
+                    Command.broadcastCommandMessage(sender, "Игроку " + player.getName() + " " + StringUtil.plural(amount, "был выдан", "было выдано", "было выдано") + " " + amount + " " + StringUtil.plural(amount, "предмет", "предмета", "предметов") + " " + material.getId() + " (" + material + ")");
             } else {
-                sender.sendMessage("There's no item called " + args[1]);
+                sender.sendMessage("Предмет с именем " + args[1] + " не найден");
             }
         } else {
-            sender.sendMessage("Can't find player " + args[0]);
+            sender.sendMessage("Игрок " + args[0] + " не найден.");
         }
 
         return true;
@@ -96,7 +101,7 @@ public class GiveCommand extends VanillaCommand {
                 i = -1 - i;
             }
 
-            for ( ; i < size; i++) {
+            for (; i < size; i++) {
                 String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     if (completion == null) {

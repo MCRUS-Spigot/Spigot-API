@@ -18,8 +18,8 @@ import com.google.common.collect.ImmutableList;
 public class OpCommand extends VanillaCommand {
     public OpCommand() {
         super("op");
-        this.description = "Gives the specified player operator status";
-        this.usageMessage = "/op <player>";
+        this.description = "Предоставляет заданному игроку статус оператора";
+        this.usageMessage = "/op <игрок>";
         this.setPermission("bukkit.command.op.give");
     }
 
@@ -27,14 +27,14 @@ public class OpCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length != 1 || args[0].length() == 0)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
         player.setOp(true);
 
-        Command.broadcastCommandMessage(sender, "Opped " + args[0]);
+        Command.broadcastCommandMessage(sender, "Игрок " + args[0] + " теперь оператор");
         return true;
     }
 

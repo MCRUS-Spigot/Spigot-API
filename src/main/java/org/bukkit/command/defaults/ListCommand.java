@@ -8,11 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableList;
+import org.bukkit.util.StringUtil;
 
 public class ListCommand extends VanillaCommand {
     public ListCommand() {
         super("list");
-        this.description = "Lists all online players";
+        this.description = "Показывает список игроков онлайн";
         this.usageMessage = "/list";
         this.setPermission("bukkit.command.list");
     }
@@ -37,7 +38,7 @@ public class ListCommand extends VanillaCommand {
             online.append(player.getDisplayName());
         }
 
-        sender.sendMessage("There are " + players.length + "/" + Bukkit.getMaxPlayers() + " players online:\n" + online.toString());
+        sender.sendMessage("На сервере " + players.length + " " + StringUtil.plural(players.length, "игрок", "игрока", "игроков") + " онлайн из " + Bukkit.getMaxPlayers() + " " +StringUtil.plural(players.length, "возможного", "возможных", "возможных") + ":\n" + online.toString());
 
         return true;
     }

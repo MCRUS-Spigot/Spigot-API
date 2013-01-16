@@ -18,7 +18,7 @@ public class WhitelistCommand extends VanillaCommand {
 
     public WhitelistCommand() {
         super("whitelist");
-        this.description = "Prevents the specified player from using this server";
+        this.description = "Управляет белым списком сервера";
         this.usageMessage = "/whitelist (add|remove) <player>\n/whitelist (on|off|list|reload)";
         this.setPermission("bukkit.command.whitelist.reload;bukkit.command.whitelist.enable;bukkit.command.whitelist.disable;bukkit.command.whitelist.list;bukkit.command.whitelist.add;bukkit.command.whitelist.remove");
     }
@@ -32,19 +32,19 @@ public class WhitelistCommand extends VanillaCommand {
                 if (badPerm(sender, "reload")) return true;
 
                 Bukkit.reloadWhitelist();
-                Command.broadcastCommandMessage(sender, "Reloaded white-list from file");
+                Command.broadcastCommandMessage(sender, "Белый список перезагружен");
                 return true;
             } else if (args[0].equalsIgnoreCase("on")) {
                 if (badPerm(sender, "enable")) return true;
 
                 Bukkit.setWhitelist(true);
-                Command.broadcastCommandMessage(sender, "Turned on white-listing");
+                Command.broadcastCommandMessage(sender, "Белый список включен");
                 return true;
             } else if (args[0].equalsIgnoreCase("off")) {
                 if (badPerm(sender, "disable")) return true;
 
                 Bukkit.setWhitelist(false);
-                Command.broadcastCommandMessage(sender, "Turned off white-listing");
+                Command.broadcastCommandMessage(sender, "Белый список выключен");
                 return true;
             } else if (args[0].equalsIgnoreCase("list")) {
                 if (badPerm(sender, "list")) return true;
@@ -59,7 +59,7 @@ public class WhitelistCommand extends VanillaCommand {
                     result.append(player.getName());
                 }
 
-                sender.sendMessage("White-listed players: " + result.toString());
+                sender.sendMessage("Список игроков в белом списке: " + result.toString());
                 return true;
             }
         } else if (args.length == 2) {
@@ -68,25 +68,25 @@ public class WhitelistCommand extends VanillaCommand {
 
                 Bukkit.getOfflinePlayer(args[1]).setWhitelisted(true);
 
-                Command.broadcastCommandMessage(sender, "Added " + args[1] + " to white-list");
+                Command.broadcastCommandMessage(sender, "Игрок " + args[1] + " добавлен в белый список");
                 return true;
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (badPerm(sender, "remove")) return true;
 
                 Bukkit.getOfflinePlayer(args[1]).setWhitelisted(false);
 
-                Command.broadcastCommandMessage(sender, "Removed " + args[1] + " from white-list");
+                Command.broadcastCommandMessage(sender, "Игрок " + args[1] + " убран из белого списка");
                 return true;
             }
         }
 
-        sender.sendMessage(ChatColor.RED + "Correct command usage:\n" + usageMessage);
+        sender.sendMessage(ChatColor.RED + "Использование:\n" + usageMessage);
         return false;
     }
 
     private boolean badPerm(CommandSender sender, String perm) {
         if (!sender.hasPermission("bukkit.command.whitelist." + perm)) {
-            sender.sendMessage(ChatColor.RED + "You do not have permission to perform this action.");
+            sender.sendMessage(ChatColor.RED + "У Вас нет прав на использование данной команды.");
             return true;
         }
 

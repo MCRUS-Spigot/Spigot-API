@@ -15,8 +15,8 @@ import com.google.common.collect.ImmutableList;
 public class PardonIpCommand extends VanillaCommand {
     public PardonIpCommand() {
         super("pardon-ip");
-        this.description = "Allows the specified IP address to use this server";
-        this.usageMessage = "/pardon-ip <address>";
+        this.description = "Разрешает игрокам заходить в игру с указанного IP адреса.";
+        this.usageMessage = "/pardon-ip <адрес>";
         this.setPermission("bukkit.command.unban.ip");
     }
 
@@ -24,15 +24,15 @@ public class PardonIpCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length != 1)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
         if (BanIpCommand.ipValidity.matcher(args[0]).matches()) {
             Bukkit.unbanIP(args[0]);
-            Command.broadcastCommandMessage(sender, "Pardoned ip " + args[0]);
+            Command.broadcastCommandMessage(sender, "Теперь игроки с IP адресом " + args[0] + " могут заходить на сервер.");
         } else {
-            sender.sendMessage("Invalid ip");
+            sender.sendMessage("IP адрес введен не верно.");
         }
 
         return true;

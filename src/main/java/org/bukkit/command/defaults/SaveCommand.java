@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
 public class SaveCommand extends VanillaCommand {
     public SaveCommand() {
         super("save-all");
-        this.description = "Saves the server to disk";
+        this.description = "Сохраняет мир на диск.";
         this.usageMessage = "/save-all";
         this.setPermission("bukkit.command.save.perform");
     }
@@ -22,7 +22,7 @@ public class SaveCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        Command.broadcastCommandMessage(sender, "Forcing save..");
+        Command.broadcastCommandMessage(sender, "Принудительное сохранение...");
 
         Bukkit.savePlayers();
 
@@ -30,7 +30,7 @@ public class SaveCommand extends VanillaCommand {
             world.save();
         }
 
-        Command.broadcastCommandMessage(sender, "Save complete.");
+        Command.broadcastCommandMessage(sender, "Сохранено.");
 
         return true;
     }

@@ -13,14 +13,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import com.google.common.collect.ImmutableList;
+import org.bukkit.util.rus.RussianModel;
 
 public class GameModeCommand extends VanillaCommand {
     private static final List<String> GAMEMODE_NAMES = ImmutableList.of("adventure", "creative", "survival");
 
     public GameModeCommand() {
         super("gamemode");
-        this.description = "Changes the player to a specific game mode";
-        this.usageMessage = "/gamemode <mode> [player]";
+        this.description = "Изменяет игровой режим указанного игрока";
+        this.usageMessage = "/gamemode <режим> [игрок]";
         this.setPermission("bukkit.command.gamemode");
     }
 
@@ -28,7 +29,7 @@ public class GameModeCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -64,19 +65,19 @@ public class GameModeCommand extends VanillaCommand {
                 player.setGameMode(mode);
 
                 if (mode != player.getGameMode()) {
-                    sender.sendMessage("Game mode change for " + player.getName() + " failed!");
+                    sender.sendMessage("Ошибка смены игрового режима игрока " + player.getName() + "!");
                 } else {
                     if (player == sender) {
-                        Command.broadcastCommandMessage(sender, "Set own game mode to " + mode.toString() + " mode");
+                        Command.broadcastCommandMessage(sender, "Ваш игровой режим изменен на " + RussianModel.getGamemode(mode).toLowerCase());
                     } else {
-                        Command.broadcastCommandMessage(sender, "Set " + player.getName() + "'s game mode to " + mode.toString() + " mode");
+                        Command.broadcastCommandMessage(sender, "Игровой режим игрока " + player.getName() + " изменен на " + RussianModel.getGamemode(mode).toLowerCase());
                     }
                 }
             } else {
-                sender.sendMessage(player.getName() + " already has game mode " + mode.getValue());
+                sender.sendMessage("Игровой режим игрока "+player.getName() + " уже " + RussianModel.getGamemode(mode).toLowerCase());
             }
         } else {
-            sender.sendMessage("Can't find player " + playerArg);
+            sender.sendMessage("Игрок " + playerArg + " не найден.");
         }
 
         return true;

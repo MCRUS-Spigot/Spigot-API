@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ClearCommand extends VanillaCommand {
     private static List<String> materials;
+
     static {
         ArrayList<String> materialList = new ArrayList<String>();
         for (Material material : Material.values()) {
@@ -27,8 +28,8 @@ public class ClearCommand extends VanillaCommand {
 
     public ClearCommand() {
         super("clear");
-        this.description = "Clears the player's inventory. Can specify item and data filters too.";
-        this.usageMessage = "/clear <player> [item] [data]";
+        this.description = "Очищает инвентарь игрока. Можно указать фильтр по предмету и его данным.";
+        this.usageMessage = "/clear <игрок> [предмет] [данные]";
         this.setPermission("bukkit.command.clear");
     }
 
@@ -49,7 +50,7 @@ public class ClearCommand extends VanillaCommand {
             if (args.length > 1 && !(args[1].equals("-1"))) {
                 Material material = Material.matchMaterial(args[1]);
                 if (material == null) {
-                    sender.sendMessage(ChatColor.RED + "There's no item called " + args[1]);
+                    sender.sendMessage(ChatColor.RED + "Не найден предмет с названием " + args[1]);
                     return false;
                 }
 
@@ -61,9 +62,9 @@ public class ClearCommand extends VanillaCommand {
             int data = args.length >= 3 ? getInteger(sender, args[2], 0) : -1;
             int count = player.getInventory().clear(id, data);
 
-            Command.broadcastCommandMessage(sender, "Cleared the inventory of " + player.getDisplayName() + ", removing " + count + " items");
+            Command.broadcastCommandMessage(sender, "Инвентарь игрока " + player.getDisplayName() + " очищен. " + StringUtil.plural(count, "Удален", "Удалены", "Удалено") + " " + count + " " + StringUtil.plural(count, "предмет", "предмета", "предметов"));
         } else {
-            sender.sendMessage(ChatColor.RED + "Can't find player " + args[0]);
+            sender.sendMessage(ChatColor.RED + "Игрок " + args[0] + " не найден");
         }
 
         return true;
@@ -91,7 +92,7 @@ public class ClearCommand extends VanillaCommand {
                 i = -1 - i;
             }
 
-            for ( ; i < size; i++) {
+            for (; i < size; i++) {
                 String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     if (completion == null) {

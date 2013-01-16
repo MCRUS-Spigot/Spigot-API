@@ -24,7 +24,7 @@ public class TimingsCommand extends BukkitCommand {
 
     public TimingsCommand(String name) {
         super(name);
-        this.description = "Records timings for all plugin events";
+        this.description = "Записывает тайминги всех событий плагинов";
         this.usageMessage = "/timings <reset|merged|separate>";
         this.setPermission("bukkit.command.timings");
     }
@@ -37,7 +37,7 @@ public class TimingsCommand extends BukkitCommand {
             return false;
         }
         if (!sender.getServer().getPluginManager().useTimings()) {
-            sender.sendMessage("Please enable timings by setting \"settings.plugin-profiling\" to true in bukkit.yml");
+            sender.sendMessage("Пожалуйста, измените значение переменной \"settings.plugin-profiling\" на true в bukkit.yml");
             return true;
         }
 
@@ -50,7 +50,7 @@ public class TimingsCommand extends BukkitCommand {
                     }
                 }
             }
-            sender.sendMessage("Timings reset");
+            sender.sendMessage("Тайминги сброшены");
         } else if ("merged".equals(args[0]) || separate) {
 
             int index = 0;
@@ -92,8 +92,8 @@ public class TimingsCommand extends BukkitCommand {
                     }
                     fileTimings.println("    Total time " + totalTime + " (" + totalTime / 1000000000 + "s)");
                 }
-                sender.sendMessage("Timings written to " + timings.getPath());
-                if (separate) sender.sendMessage("Names written to " + names.getPath());
+                sender.sendMessage("Тайминги записаны в " + timings.getPath());
+                if (separate) sender.sendMessage("Названия записаны в " + names.getPath());
             } catch (IOException e) {
             } finally {
                 if (fileTimings != null) {

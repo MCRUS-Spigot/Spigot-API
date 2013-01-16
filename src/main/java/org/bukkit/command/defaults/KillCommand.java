@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
 public class KillCommand extends VanillaCommand {
     public KillCommand() {
         super("kill");
-        this.description = "Commits suicide, only usable as a player";
+        this.description = "Вызывает суицид.";
         this.usageMessage = "/kill";
         this.setPermission("bukkit.command.kill");
     }
@@ -31,7 +31,7 @@ public class KillCommand extends VanillaCommand {
 
             ede.getEntity().setLastDamageCause(ede);
             player.setHealth(0);
-            sender.sendMessage("Ouch. That look like it hurt.");
+            sender.sendMessage("Оу. Это было больно.");
         } else {
             sender.sendMessage("You can only perform this command as a player");
         }

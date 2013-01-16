@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
 public class SeedCommand extends VanillaCommand {
     public SeedCommand() {
         super("seed");
-        this.description = "Shows the world seed";
+        this.description = "Показывает сид мира";
         this.usageMessage = "/seed";
         this.setPermission("bukkit.command.seed");
     }
@@ -26,7 +26,7 @@ public class SeedCommand extends VanillaCommand {
         } else {
             seed = Bukkit.getWorlds().get(0).getSeed();
         }
-        sender.sendMessage("Seed: " + seed);
+        sender.sendMessage("Сид: " + seed);
         return true;
     }
 

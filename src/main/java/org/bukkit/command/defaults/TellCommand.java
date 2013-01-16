@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 public class TellCommand extends VanillaCommand {
     public TellCommand() {
         super("tell");
-        this.description = "Sends a private message to the given player";
-        this.usageMessage = "/tell <player> <message>";
+        this.description = "Отсылает личное сообщение указанному игроку.";
+        this.usageMessage = "/tell <игрок> <сообщение>";
         this.setPermission("bukkit.command.tell");
     }
 
@@ -18,7 +18,7 @@ public class TellCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 2)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -26,7 +26,7 @@ public class TellCommand extends VanillaCommand {
 
         // If a player is hidden from the sender pretend they are offline
         if (player == null || (sender instanceof Player && !((Player) sender).canSee(player))) {
-            sender.sendMessage("There's no player by that name online.");
+            sender.sendMessage("Игрок не найден. Возможно он не в сети.");
         } else {
             StringBuilder message = new StringBuilder();
 
@@ -35,7 +35,7 @@ public class TellCommand extends VanillaCommand {
                 message.append(args[i]);
             }
 
-            String result = ChatColor.GRAY + sender.getName() + " whispers " + message;
+            String result = ChatColor.GRAY + sender.getName() + " шепчет " + message;
 
             sender.sendMessage("[" + sender.getName() + "->" + player.getName() + "] " + message);
             player.sendMessage(result);

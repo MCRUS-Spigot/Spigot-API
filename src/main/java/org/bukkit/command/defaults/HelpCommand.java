@@ -26,8 +26,8 @@ import com.google.common.collect.ImmutableList;
 public class HelpCommand extends VanillaCommand {
     public HelpCommand() {
         super("help");
-        this.description = "Shows the help menu";
-        this.usageMessage = "/help <pageNumber>\n/help <topic>\n/help <topic> <pageNumber>";
+        this.description = "Показываем меню помощи";
+        this.usageMessage = "/help <номер страницы>\n/help <тема>\n/help <тема> <номер страницы>";
         this.setPermission("bukkit.command.help");
     }
 
@@ -78,7 +78,7 @@ public class HelpCommand extends VanillaCommand {
         }
 
         if (topic == null || !topic.canSee(sender)) {
-            sender.sendMessage(ChatColor.RED + "No help for " + command);
+            sender.sendMessage(ChatColor.RED + "Для " + command + " помощь не найдена.");
             return true;
         }
 
@@ -88,7 +88,7 @@ public class HelpCommand extends VanillaCommand {
         header.append(ChatColor.YELLOW);
         header.append("--------- ");
         header.append(ChatColor.WHITE);
-        header.append("Help: ");
+        header.append("Помощь: ");
         header.append(topic.getName());
         header.append(" ");
         if (page.getTotalPages() > 1) {
@@ -160,7 +160,7 @@ public class HelpCommand extends VanillaCommand {
         }
 
         if (possibleMatches.size() > 0) {
-            return new IndexHelpTopic("Search", null, null, possibleMatches, "Search for: " + searchString);
+            return new IndexHelpTopic("Поиск", null, null, possibleMatches, "Поиск: " + searchString);
         } else {
             return null;
         }

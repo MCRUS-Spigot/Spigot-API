@@ -18,8 +18,8 @@ public class WeatherCommand extends VanillaCommand {
 
     public WeatherCommand() {
         super("weather");
-        this.description = "Changes the weather";
-        this.usageMessage = "/weather <clear/rain/thunder> [duration in seconds]";
+        this.description = "Меняет погоду";
+        this.usageMessage = "/weather <clear/rain/thunder> [длительность в секундах]";
         this.setPermission("bukkit.command.weather");
     }
 
@@ -27,7 +27,7 @@ public class WeatherCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -44,15 +44,15 @@ public class WeatherCommand extends VanillaCommand {
         if ("clear".equalsIgnoreCase(args[0])) {
             world.setStorm(false);
             world.setThundering(false);
-            Command.broadcastCommandMessage(sender, "Changed weather to clear for " + (duration / 20) + " seconds.");
+            Command.broadcastCommandMessage(sender, "Установлена солнечная погода на " + (duration / 20) + " секунд.");
         } else if ("rain".equalsIgnoreCase(args[0])) {
             world.setStorm(true);
             world.setThundering(false);
-            Command.broadcastCommandMessage(sender, "Changed weather to rainy for " + (duration / 20) + " seconds.");
+            Command.broadcastCommandMessage(sender, "Установлена дождливая погода на " + (duration / 20) + " секунд.");
         } else if ("thunder".equalsIgnoreCase(args[0])) {
             world.setStorm(true);
             world.setThundering(true);
-            Command.broadcastCommandMessage(sender, "Changed weather to thundering " + (duration / 20) + " seconds.");
+            Command.broadcastCommandMessage(sender, "Установлен шторм на " + (duration / 20) + " секунд.");
         }
 
         return true;

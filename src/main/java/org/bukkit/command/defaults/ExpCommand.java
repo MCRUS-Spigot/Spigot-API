@@ -10,12 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.ImmutableList;
+import org.bukkit.util.StringUtil;
 
 public class ExpCommand extends VanillaCommand {
     public ExpCommand() {
         super("xp");
-        this.description = "Gives the specified player a certain amount of experience. Specify <amount>L to give levels instead, with a negative amount resulting in taking levels.";
-        this.usageMessage = "/xp <amount> [player] OR /xp <amount>L [player]";
+        this.description = "Выдает указанному игроку указаное количество опыта. Указывайте <количество>L для выдачи уровней. Если значение отричательное, то опыт снимается.";
+        this.usageMessage = "/xp <количество> [игрок] ИЛИ /xp <количество>L [игрок]";
         this.setPermission("bukkit.command.xp");
     }
 
@@ -49,29 +50,29 @@ public class ExpCommand extends VanillaCommand {
                 if (isLevel) {
                     if (isTaking) {
                         player.giveExpLevels(-amount);
-                        Command.broadcastCommandMessage(sender, "Taken " + amount + " level(s) from " + player.getName());
+                        Command.broadcastCommandMessage(sender, StringUtil.plural(amount, "Забран", "Забрано", "Забрано") + " " + amount + " " + StringUtil.plural(amount, "уровень", "уровня", "уровней") + " у игрока " + player.getName());
                     } else {
                         player.giveExpLevels(amount);
-                        Command.broadcastCommandMessage(sender, "Given " + amount + " level(s) to " + player.getName());
+                        Command.broadcastCommandMessage(sender, amount + " " + StringUtil.plural(amount, "уровень выдан", "уровня выдано", "уровней выдано") + " игроку " + player.getName());
                     }
                 } else {
                     if (isTaking) {
-                        sender.sendMessage(ChatColor.RED + "Taking experience can only be done by levels, cannot give players negative experience points");
+                        sender.sendMessage(ChatColor.RED + "Снятие опыта доступно только с помощью уровней.");
                         return false;
                     } else {
                         player.giveExp(amount);
-                        Command.broadcastCommandMessage(sender, "Given " + amount + " experience to " + player.getName());
+                        Command.broadcastCommandMessage(sender, amount + " " + StringUtil.plural(amount, "опыт выдан", "опаты выдано", "опыта выдано") + " игроку " + player.getName());
                     }
                 }
             } else {
-                sender.sendMessage("Can't find player, was one provided?\n" + ChatColor.RED + "Usage: " + usageMessage);
+                sender.sendMessage("Игрок не найден. Вы указали его?\n" + ChatColor.RED + "Использование: " + usageMessage);
                 return false;
             }
 
             return true;
         }
 
-        sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+        sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
         return false;
     }
 

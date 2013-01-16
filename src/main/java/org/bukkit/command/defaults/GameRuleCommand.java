@@ -19,8 +19,8 @@ public class GameRuleCommand extends VanillaCommand {
 
     public GameRuleCommand() {
         super("gamerule");
-        this.description = "Sets a server's game rules";
-        this.usageMessage = "/gamerule <rule name> <value> OR /gamerule <rule name>";
+        this.description = "Выставляет правила сервера";
+        this.usageMessage = "/gamerule <название правила> <значение> ИЛИ /gamerule <название правила>";
         this.setPermission("bukkit.command.gamerule");
     }
 
@@ -37,19 +37,19 @@ public class GameRuleCommand extends VanillaCommand {
                     String value = args[1];
 
                     world.setGameRuleValue(rule, value);
-                    Command.broadcastCommandMessage(sender, "Game rule " + rule + " has been set to: " + value);
+                    Command.broadcastCommandMessage(sender, "Правило " + rule + " изменено на: " + value);
                 } else {
                     String value = world.getGameRuleValue(rule);
                     sender.sendMessage(rule + " = " + value);
                 }
             } else {
-                sender.sendMessage(ChatColor.RED + "No game rule called " + rule + " is available");
+                sender.sendMessage(ChatColor.RED + "Правило " + rule + " не найдено");
             }
 
             return true;
         } else {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            sender.sendMessage("Rules: " + this.createString(getGameWorld(sender).getGameRules(), 0, ", "));
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
+            sender.sendMessage("Правила: " + this.createString(getGameWorld(sender).getGameRules(), 0, ", "));
 
             return true;
         }

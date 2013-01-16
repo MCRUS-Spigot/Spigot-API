@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender;
 public class MeCommand extends VanillaCommand {
     public MeCommand() {
         super("me");
-        this.description = "Performs the specified action in chat";
-        this.usageMessage = "/me <action>";
+        this.description = "Выполняет указанное действия в чате";
+        this.usageMessage = "/me <действия>";
         this.setPermission("bukkit.command.me");
     }
 
@@ -16,7 +16,7 @@ public class MeCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 1)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 

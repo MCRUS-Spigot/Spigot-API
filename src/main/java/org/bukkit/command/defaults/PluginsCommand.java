@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 public class PluginsCommand extends BukkitCommand {
     public PluginsCommand(String name) {
         super(name);
-        this.description = "Gets a list of plugins running on the server";
+        this.description = "Показывает список плагинов сервера";
         this.usageMessage = "/plugins";
         this.setPermission("bukkit.command.plugins");
         this.setAliases(Arrays.asList("pl"));
@@ -20,7 +20,7 @@ public class PluginsCommand extends BukkitCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
-        sender.sendMessage("Plugins " + getPluginList());
+        sender.sendMessage("Плагины " + getPluginList());
         return true;
     }
 

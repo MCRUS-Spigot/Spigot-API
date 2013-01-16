@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableList;
 public class SaveOffCommand extends VanillaCommand {
     public SaveOffCommand() {
         super("save-off");
-        this.description = "Disables server autosaving";
+        this.description = "Отключает автоматическое сохранение мира на диск";
         this.usageMessage = "/save-off";
         this.setPermission("bukkit.command.save.disable");
     }
@@ -26,7 +26,7 @@ public class SaveOffCommand extends VanillaCommand {
             world.setAutoSave(false);
         }
 
-        Command.broadcastCommandMessage(sender, "Disabled level saving..");
+        Command.broadcastCommandMessage(sender, "Автоматическое сохранение мира отключено.");
         return true;
     }
 

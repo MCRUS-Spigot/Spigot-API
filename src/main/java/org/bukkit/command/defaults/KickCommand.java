@@ -14,8 +14,8 @@ import com.google.common.collect.ImmutableList;
 public class KickCommand extends VanillaCommand {
     public KickCommand() {
         super("kick");
-        this.description = "Removes the specified player from the server";
-        this.usageMessage = "/kick <player> [reason ...]";
+        this.description = "Выбрасывает игрока с сервера";
+        this.usageMessage = "/kick <игрок> [причина ...]";
         this.setPermission("bukkit.command.kick");
     }
 
@@ -23,23 +23,23 @@ public class KickCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length < 1 || args[0].length() == 0) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
         Player player = Bukkit.getPlayerExact(args[0]);
 
         if (player != null) {
-            String reason = "Kicked by an operator.";
+            String reason = "Выброшен администратором.";
 
             if (args.length > 1) {
                 reason = createString(args, 1);
             }
 
             player.kickPlayer(reason);
-            Command.broadcastCommandMessage(sender, "Kicked player " + player.getName() + ". With reason:\n" + reason);
+            Command.broadcastCommandMessage(sender, "Игрок " + player.getName() + " был выброшен с сервера. Причина:\n" + reason);
         } else {
-            sender.sendMessage( args[0] + " not found.");
+            sender.sendMessage("Игрок " + args[0] + " не найден.");
         }
 
         return true;

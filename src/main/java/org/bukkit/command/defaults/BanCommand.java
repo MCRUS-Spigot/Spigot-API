@@ -14,8 +14,8 @@ import com.google.common.collect.ImmutableList;
 public class BanCommand extends VanillaCommand {
     public BanCommand() {
         super("ban");
-        this.description = "Prevents the specified player from using this server";
-        this.usageMessage = "/ban <player> [reason ...]";
+        this.description = "Запрещает использование сервера определенным игроком";
+        this.usageMessage = "/ban <игрок> [причина ...]";
         this.setPermission("bukkit.command.ban.player");
     }
 
@@ -23,7 +23,7 @@ public class BanCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -32,10 +32,10 @@ public class BanCommand extends VanillaCommand {
 
         Player player = Bukkit.getPlayer(args[0]);
         if (player != null) {
-            player.kickPlayer("Banned by admin.");
+            player.kickPlayer("Вы заблокированы администратором.");
         }
 
-        Command.broadcastCommandMessage(sender, "Banned player " + args[0]);
+        Command.broadcastCommandMessage(sender, "Игрок " + args[0] + " заблокирован.");
         return true;
     }
 

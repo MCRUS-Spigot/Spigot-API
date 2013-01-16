@@ -11,14 +11,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
 import com.google.common.collect.ImmutableList;
+import org.bukkit.util.rus.RussianModel;
 
 public class DefaultGameModeCommand extends VanillaCommand {
     private static final List<String> GAMEMODE_NAMES = ImmutableList.of("adventure", "creative", "survival");
 
     public DefaultGameModeCommand() {
         super("defaultgamemode");
-        this.description = "Set the default gamemode";
-        this.usageMessage = "/defaultgamemode <mode>";
+        this.description = "Выставляет игровой режим по умолчанию";
+        this.usageMessage = "/defaultgamemode <режим>";
         this.setPermission("bukkit.command.defaultgamemode");
     }
 
@@ -26,7 +27,7 @@ public class DefaultGameModeCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length == 0) {
-            sender.sendMessage("Usage: " + usageMessage);
+            sender.sendMessage("Использование: " + usageMessage);
             return false;
         }
 
@@ -50,7 +51,7 @@ public class DefaultGameModeCommand extends VanillaCommand {
         }
 
         Bukkit.getServer().setDefaultGameMode(mode);
-        Command.broadcastCommandMessage(sender, "Default game mode set to " + mode.toString().toLowerCase());
+        Command.broadcastCommandMessage(sender, "Игровой режим по упомчанию теперь '" + RussianModel.getGamemode(mode).toLowerCase() + "'");
 
         return true;
     }

@@ -18,8 +18,8 @@ public class VersionCommand extends BukkitCommand {
     public VersionCommand(String name) {
         super(name);
 
-        this.description = "Gets the version of this server including any plugins in use";
-        this.usageMessage = "/version [plugin name]";
+        this.description = "Показывает версию сервера или указанного плагина.";
+        this.usageMessage = "/version [название плагина]";
         this.setPermission("bukkit.command.version");
         this.setAliases(Arrays.asList("ver", "about"));
     }
@@ -29,7 +29,7 @@ public class VersionCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         if (args.length == 0) {
-            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
+            sender.sendMessage("Данный сервер работает на основе " + Bukkit.getName() + " версии " + Bukkit.getVersion() + " (Реализация API версии " + Bukkit.getBukkitVersion() + ")");
         } else {
             StringBuilder name = new StringBuilder();
 
@@ -58,8 +58,8 @@ public class VersionCommand extends BukkitCommand {
             }
 
             if (!found) {
-                sender.sendMessage("This server is not running any plugin by that name.");
-                sender.sendMessage("Use /plugins to get a list of plugins.");
+                sender.sendMessage("На этом сервере нет такого плагина.");
+                sender.sendMessage("Используйте /plugins чтобы получить список плагинов.");
             }
         }
         return true;
@@ -67,21 +67,21 @@ public class VersionCommand extends BukkitCommand {
 
     private void describeToSender(Plugin plugin, CommandSender sender) {
         PluginDescriptionFile desc = plugin.getDescription();
-        sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
+        sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " версия " + ChatColor.GREEN + desc.getVersion());
 
         if (desc.getDescription() != null) {
             sender.sendMessage(desc.getDescription());
         }
 
         if (desc.getWebsite() != null) {
-            sender.sendMessage("Website: " + ChatColor.GREEN + desc.getWebsite());
+            sender.sendMessage("Веб сайт: " + ChatColor.GREEN + desc.getWebsite());
         }
 
         if (!desc.getAuthors().isEmpty()) {
             if (desc.getAuthors().size() == 1) {
-                sender.sendMessage("Author: " + getAuthors(desc));
+                sender.sendMessage("Автор: " + getAuthors(desc));
             } else {
-                sender.sendMessage("Authors: " + getAuthors(desc));
+                sender.sendMessage("Авторы: " + getAuthors(desc));
             }
         }
     }
@@ -97,7 +97,7 @@ public class VersionCommand extends BukkitCommand {
                 if (i < authors.size() - 1) {
                     result.append(", ");
                 } else {
-                    result.append(" and ");
+                    result.append(" и ");
                 }
             }
 

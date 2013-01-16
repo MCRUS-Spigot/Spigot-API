@@ -17,8 +17,8 @@ import com.google.common.collect.ImmutableList;
 public class DeopCommand extends VanillaCommand {
     public DeopCommand() {
         super("deop");
-        this.description = "Takes the specified player's operator status";
-        this.usageMessage = "/deop <player>";
+        this.description = "Отзывает у указанного игрока статус оператора";
+        this.usageMessage = "/deop <игрок>";
         this.setPermission("bukkit.command.op.take");
     }
 
@@ -26,7 +26,7 @@ public class DeopCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         if (args.length != 1 || args[0].length() == 0) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -34,10 +34,10 @@ public class DeopCommand extends VanillaCommand {
         player.setOp(false);
 
         if (player instanceof Player) {
-            ((Player) player).sendMessage(ChatColor.YELLOW + "You are no longer op!");
+            ((Player) player).sendMessage(ChatColor.YELLOW + "Вы больше не оператор!");
         }
 
-        Command.broadcastCommandMessage(sender, "De-opped " + args[0]);
+        Command.broadcastCommandMessage(sender, "Статус оператор отозван у игрока " + args[0]);
         return true;
     }
 

@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 public class ReloadCommand extends BukkitCommand {
     public ReloadCommand(String name) {
         super(name);
-        this.description = "Reloads the server configuration and plugins";
+        this.description = "Презагружает конфигурацию сервера и плагины";
         this.usageMessage = "/reload";
         this.setPermission("bukkit.command.reload");
         this.setAliases(Arrays.asList("rl"));
@@ -21,7 +21,7 @@ public class ReloadCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         Bukkit.reload();
-        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
+        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Перезагрузка завершена.");
 
         return true;
     }
