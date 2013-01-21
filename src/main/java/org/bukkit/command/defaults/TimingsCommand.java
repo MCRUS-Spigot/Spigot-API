@@ -10,6 +10,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.CustomTimingsHandler;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +23,7 @@ import com.google.common.collect.ImmutableList;
 public class TimingsCommand extends BukkitCommand {
     private static final List<String> TIMINGS_SUBCOMMANDS = ImmutableList.of("merged", "reset", "separate");
 
+    public static long timingStart =  0; // Spigot
     public TimingsCommand(String name) {
         super(name);
         this.description = "Записывает тайминги всех событий плагинов";
@@ -50,9 +52,12 @@ public class TimingsCommand extends BukkitCommand {
                     }
                 }
             }
+            CustomTimingsHandler.reload(); // Spigot
+            timingStart = System.nanoTime(); // Spigot
             sender.sendMessage("Тайминги сброшены");
         } else if ("merged".equals(args[0]) || separate) {
 
+            long sampleTime = System.nanoTime() - timingStart; // Spigot
             int index = 0;
             int pluginIdx = 0;
             File timingFolder = new File("timings");
@@ -92,8 +97,11 @@ public class TimingsCommand extends BukkitCommand {
                     }
                     fileTimings.println("    Total time " + totalTime + " (" + totalTime / 1000000000 + "s)");
                 }
-                sender.sendMessage("Тайминги записаны в " + timings.getPath());
-                if (separate) sender.sendMessage("Названия записаны в " + names.getPath());
+                CustomTimingsHandler.printTimings(fileTimings); // Spigot
+                fileTimings.println("Sample time " + sampleTime + " (" + sampleTime / 1000000000 + "s)"); // Spigot
+                sender.sendMessage("Тайминки записаны в " + timings.getPath());
+                sender.sendMessage("Вставьте контет файла на http://aikar.co/timings.php чтобы прочесть результаты."); // Spigot
+                if (separate) sender.sendMessage("Names written to " + names.getPath());
             } catch (IOException e) {
             } finally {
                 if (fileTimings != null) {
