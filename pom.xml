@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.spigotmc</groupId>
     <artifactId>spigot-api</artifactId>
-    <version>1.4.7-R1.0</version>
+    <version>1.4.7-R1.1-SNAPSHOT</version>
     <name>Spigot-API</name>
     <url>http://www.spigotmc.org</url>
 
