@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.CustomTimingsHandler;
+import org.bukkit.CustomTimingsHandler;
 
 public class ReloadCommand extends BukkitCommand {
     public ReloadCommand(String name) {
