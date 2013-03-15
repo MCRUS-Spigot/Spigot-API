@@ -4,12 +4,13 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.CustomTimingsHandler;
 import org.bukkit.command.CommandSender;
+import org.bukkit.CustomTimingsHandler;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.SimplePluginManager; // Spigot
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.util.StringUtil;
@@ -40,8 +41,9 @@ public class TimingsCommand extends BukkitCommand {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
+        // Spigot start - this is dynamic now
         /*if (!sender.getServer().getPluginManager().useTimings()) {
-            sender.sendMessage("Пожалуйста, измените значение переменной \"settings.plugin-profiling\" на true в bukkit.yml");
+            sender.sendMessage("Please enable timings by setting \"settings.plugin-profiling\" to true in bukkit.yml");
             return true;
         }*/
         if ("on".equals(args[0])) {

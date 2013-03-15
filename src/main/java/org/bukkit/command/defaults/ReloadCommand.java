@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.CustomTimingsHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.CustomTimingsHandler;
 
 import java.util.Arrays;
 
