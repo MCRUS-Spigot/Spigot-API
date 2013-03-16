@@ -5,22 +5,20 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.CustomTimingsHandler;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.SimplePluginManager; // Spigot
-import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.util.StringUtil;
 
-import java.io.*;
+import com.google.common.collect.ImmutableList;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
 public class TimingsCommand extends BukkitCommand {
@@ -68,7 +66,7 @@ public class TimingsCommand extends BukkitCommand {
             }
             CustomTimingsHandler.reload(); // Spigot
             timingStart = System.nanoTime(); // Spigot
-            sender.sendMessage("Timings reset");
+            sender.sendMessage("Тайминги сброшены");
         } else if ("merged".equals(args[0]) || separate || paste) { // Spigot
             if (!Bukkit.getServer().getPluginManager().useTimings()) {sender.sendMessage("Please enable timings by typing /timings on"); return true; } // Spigot
             long sampleTime = System.nanoTime() - timingStart; // Spigot

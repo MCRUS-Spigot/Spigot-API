@@ -3,6 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.spigotmc</groupId>
     <artifactId>spigot-api</artifactId>
+
+    <parent>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-parent</artifactId>
+        <version>dev-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.spigotmc</groupId>
+    <artifactId>spigot-api</artifactId>
     <version>1.5-R0.1-SNAPSHOT</version>
     <name>Spigot-API</name>
     <url>http://www.spigotmc.org</url>
