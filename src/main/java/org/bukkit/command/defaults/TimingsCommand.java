@@ -4,21 +4,22 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.CustomTimingsHandler;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
-import org.bukkit.plugin.SimplePluginManager; // Spigot
+import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.util.StringUtil;
 
-import com.google.common.collect.ImmutableList;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class TimingsCommand extends BukkitCommand {
@@ -27,8 +28,8 @@ public class TimingsCommand extends BukkitCommand {
     public static long timingStart =  0; // Spigot
     public TimingsCommand(String name) {
         super(name);
-        this.description = "Записывает тайминги всех событий плагинов";
-        this.usageMessage = "/timings <reset|merged|separate>";
+        this.description = "Records timings for all plugin events";
+        this.usageMessage = "/timings <reset|merged|separate|paste|on|off>"; // Spigot
         this.setPermission("bukkit.command.timings");
     }
 
@@ -46,11 +47,11 @@ public class TimingsCommand extends BukkitCommand {
         }*/
         if ("on".equals(args[0])) {
             ((SimplePluginManager)Bukkit.getServer().getPluginManager()).useTimings(true);
-            sender.sendMessage("Тайминги включены");
+            sender.sendMessage("Enabled Timings");
         } else if ("off".equals(args[0])) {
             ((SimplePluginManager)Bukkit.getServer().getPluginManager()).useTimings(false);
-            sender.sendMessage("Тайминги выключены");
-        } 
+            sender.sendMessage("Disabled Timings");
+        }
         // Spigot end
 
         boolean separate = "separate".equals(args[0]);
@@ -66,7 +67,7 @@ public class TimingsCommand extends BukkitCommand {
             }
             CustomTimingsHandler.reload(); // Spigot
             timingStart = System.nanoTime(); // Spigot
-            sender.sendMessage("Тайминги сброшены");
+            sender.sendMessage("Timings reset");
         } else if ("merged".equals(args[0]) || separate || paste) { // Spigot
             if (!Bukkit.getServer().getPluginManager().useTimings()) {sender.sendMessage("Please enable timings by typing /timings on"); return true; } // Spigot
             long sampleTime = System.nanoTime() - timingStart; // Spigot
@@ -117,8 +118,8 @@ public class TimingsCommand extends BukkitCommand {
                 if (paste) {
                     new PasteThread(sender, bout).start();
                 } else {
-                    sender.sendMessage("Тайминги записаны в " + timings.getPath());
-                    sender.sendMessage("Вставьте контент файла на http://aikar.co/timings.php чтобы прочесть результаты.");
+                    sender.sendMessage("Timings written to " + timings.getPath());
+                    sender.sendMessage("Paste contents of file into form at http://aikar.co/timings.php to read results.");
                 }
                 // Spigot end
                 if (separate) sender.sendMessage("Names written to " + names.getPath());
