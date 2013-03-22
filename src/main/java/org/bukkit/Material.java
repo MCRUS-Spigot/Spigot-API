@@ -16,6 +16,7 @@ import org.bukkit.material.Command;
 import org.bukkit.material.Crops;
 import org.bukkit.material.DetectorRail;
 import org.bukkit.material.Diode;
+import org.bukkit.material.DirectionalContainer;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.Door;
 import org.bukkit.material.Dye;
@@ -29,6 +30,7 @@ import org.bukkit.material.LongGrass;
 import org.bukkit.material.MaterialData;
 import org.bukkit.material.MonsterEggs;
 import org.bukkit.material.Mushroom;
+import org.bukkit.material.NetherWarts;
 import org.bukkit.material.PistonBaseMaterial;
 import org.bukkit.material.PistonExtensionMaterial;
 import org.bukkit.material.PoweredRail;
@@ -176,7 +178,7 @@ public enum Material {
     NETHER_BRICK(112),
     NETHER_FENCE(113),
     NETHER_BRICK_STAIRS(114, Stairs.class),
-    NETHER_WARTS(115, MaterialData.class),
+    NETHER_WARTS(115, NetherWarts.class),
     ENCHANTMENT_TABLE(116),
     BREWING_STAND(117, MaterialData.class),
     CAULDRON(118, Cauldron.class),
@@ -219,7 +221,7 @@ public enum Material {
     QUARTZ_BLOCK(155),
     QUARTZ_STAIRS(156, Stairs.class),
     ACTIVATOR_RAIL(157),
-    DROPPER(158),
+    DROPPER(158, DirectionalContainer.class),
     // ----- Item Separator -----
     IRON_SPADE(256, 1, 250),
     IRON_PICKAXE(257, 1, 250),
@@ -946,6 +948,23 @@ public enum Material {
             case QUARTZ_ORE:
             case QUARTZ_BLOCK:
             case DROPPER:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * @return True if this material is affected by gravity.
+     */
+    public boolean hasGravity() {
+        if (!isBlock()) {
+            return false;
+        }
+        switch (this) {
+            case SAND:
+            case GRAVEL:
+            case ANVIL:
                 return true;
             default:
                 return false;
