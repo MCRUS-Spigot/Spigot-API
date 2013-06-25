@@ -22,6 +22,7 @@ public class ReloadCommand extends BukkitCommand {
         if (!testPermission(sender)) return true;
 
         CustomTimingsHandler.reload(); // Spigot
+        org.spigotmc.CustomTimingsHandler.reload(); // Spigot: TODO: Why is this here?
         Bukkit.reload();
         Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Перезагрузка завершена.");
 
