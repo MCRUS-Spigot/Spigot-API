@@ -26,7 +26,7 @@ import com.google.common.collect.ImmutableList;
 public class HelpCommand extends VanillaCommand {
     public HelpCommand() {
         super("help");
-        this.description = "Показываем меню помощи";
+        this.description = "Показывает меню помощи";
         this.usageMessage = "/help <номер страницы>\n/help <тема>\n/help <тема> <номер страницы>";
         this.setPermission("bukkit.command.help");
     }
