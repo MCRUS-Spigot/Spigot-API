@@ -30,6 +30,7 @@ public class VersionCommand extends BukkitCommand {
 
         if (args.length == 0) {
             sender.sendMessage("Данный сервер работает на основе " + Bukkit.getName() + " версии " + Bukkit.getVersion() + " (Реализация API версии " + Bukkit.getBukkitVersion() + ")");
+            sender.sendMessage(ChatColor.DARK_AQUA + "Перевод Alex_Bond_UA (mc-ci.alexbond.info)");
         } else {
             StringBuilder name = new StringBuilder();
 

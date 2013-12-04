@@ -1,8 +1,10 @@
 package org.bukkit.command.defaults;
 
 import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,8 +17,8 @@ public class EffectCommand extends VanillaCommand {
 
     public EffectCommand() {
         super("effect");
-        this.description = "Adds/Removes effects on players";
-        this.usageMessage = "/effect <player> <effect|clear> [seconds] [amplifier]";
+        this.description = "Добавляет/убирает эффект с игрока";
+        this.usageMessage = "/effect <игрок> <effect|clear> [seconds] [amplifier]";
         this.setPermission("bukkit.command.effect");
     }
 
@@ -54,7 +56,7 @@ public class EffectCommand extends VanillaCommand {
             for (PotionEffect effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
-            sender.sendMessage(String.format("Took all effects from %s", args[0]));
+            sender.sendMessage(String.format("Все эффекты бли убраны у %s", args[0]));
             return true;
         }
 
@@ -65,7 +67,7 @@ public class EffectCommand extends VanillaCommand {
         }
 
         if (effect == null) {
-            sender.sendMessage(ChatColor.RED + String.format("Effect, %s, not found", args[1]));
+            sender.sendMessage(ChatColor.RED + String.format("Эффект %s не найден", args[1]));
             return true;
         }
 
@@ -90,17 +92,17 @@ public class EffectCommand extends VanillaCommand {
 
         if (duration_temp == 0) {
             if (!player.hasPotionEffect(effect)) {
-                sender.sendMessage(String.format("Couldn't take %s from %s as they do not have the effect", effect.getName(), args[0]));
+                sender.sendMessage(String.format("Эффект %s на найден у игрока %s", effect.getName(), args[0]));
                 return true;
             }
 
             player.removePotionEffect(effect);
-            broadcastCommandMessage(sender, String.format("Took %s from %s", effect.getName(), args[0]));
+            broadcastCommandMessage(sender, String.format("Эффект %s был убран у игрока %s", effect.getName(), args[0]));
         } else {
             final PotionEffect applyEffect = new PotionEffect(effect, duration, amplification);
 
             player.addPotionEffect(applyEffect, true);
-            broadcastCommandMessage(sender, String.format("Given %s (ID %d) * %d to %s for %d seconds", effect.getName(), effect.getId(), amplification, args[0], duration_temp));
+            broadcastCommandMessage(sender, String.format("Эффект %s (ID %d) * %d был применен на %s на %d %s", effect.getName(), effect.getId(), amplification, args[0], duration_temp, StringUtil.plural(duration_temp, "секунду", "секунды", "секунд")));
         }
 
         return true;

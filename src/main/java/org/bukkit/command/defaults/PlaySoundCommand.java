@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 public class PlaySoundCommand extends VanillaCommand {
     public PlaySoundCommand() {
         super("playsound");
-        this.description = "Plays a sound to a given player";
-        this.usageMessage = "/playsound <sound> <player> [x] [y] [z] [volume] [pitch] [minimumVolume]";
+        this.description = "Воспроизводит выбранный звук у игрока";
+        this.usageMessage = "/playsound <звук> <игрок> [x] [y] [z] [громкость] [pitch] [минимальнаяГромкость]";
         this.setPermission("bukkit.command.playsound");
     }
 
@@ -21,7 +21,7 @@ public class PlaySoundCommand extends VanillaCommand {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Сипользование: " + usageMessage);
             return false;
         }
         final String soundArg = args[0];
@@ -29,7 +29,7 @@ public class PlaySoundCommand extends VanillaCommand {
 
         final Player player = Bukkit.getPlayerExact(playerArg);
         if (player == null) {
-            sender.sendMessage(ChatColor.RED + "Can't find player " + playerArg);
+            sender.sendMessage(ChatColor.RED + "Игрок " + playerArg + " не найден.");
             return false;
         }
 
@@ -43,28 +43,28 @@ public class PlaySoundCommand extends VanillaCommand {
         double minimumVolume = 0.0D;
 
         switch (args.length) {
-        default:
-        case 8:
-            minimumVolume = getDouble(sender, args[7], 0.0D, 1.0D);
-        case 7:
-            pitch = getDouble(sender, args[6], 0.0D, 2.0D);
-        case 6:
-            volume = getDouble(sender, args[5], 0.0D, Float.MAX_VALUE);
-        case 5:
-            z = getRelativeDouble(z, sender, args[4]);
-        case 4:
-            y = getRelativeDouble(y, sender, args[3]);
-        case 3:
-            x = getRelativeDouble(x, sender, args[2]);
-        case 2:
-            // Noop
+            default:
+            case 8:
+                minimumVolume = getDouble(sender, args[7], 0.0D, 1.0D);
+            case 7:
+                pitch = getDouble(sender, args[6], 0.0D, 2.0D);
+            case 6:
+                volume = getDouble(sender, args[5], 0.0D, Float.MAX_VALUE);
+            case 5:
+                z = getRelativeDouble(z, sender, args[4]);
+            case 4:
+                y = getRelativeDouble(y, sender, args[3]);
+            case 3:
+                x = getRelativeDouble(x, sender, args[2]);
+            case 2:
+                // Noop
         }
 
         final double fixedVolume = volume > 1.0D ? volume * 16.0D : 16.0D;
         final Location soundLocation = new Location(player.getWorld(), x, y, z);
         if (location.distanceSquared(soundLocation) > fixedVolume * fixedVolume) {
             if (minimumVolume <= 0.0D) {
-                sender.sendMessage(ChatColor.RED + playerArg + " is too far away to hear the sound");
+                sender.sendMessage(ChatColor.RED + playerArg + " слишком далеко чтобы услышать звук");
                 return false;
             }
 
@@ -81,7 +81,7 @@ public class PlaySoundCommand extends VanillaCommand {
         } else {
             player.playSound(soundLocation, soundArg, (float) volume, (float) pitch);
         }
-        sender.sendMessage(String.format("Played '%s' to %s", soundArg, playerArg));
+        sender.sendMessage(String.format("Звук '%s' было проигран у игрока %s", soundArg, playerArg));
         return true;
     }
 }

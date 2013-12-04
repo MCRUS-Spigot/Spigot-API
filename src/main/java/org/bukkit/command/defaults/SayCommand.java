@@ -30,7 +30,7 @@ public class SayCommand extends VanillaCommand {
         StringBuilder message = new StringBuilder();
         message.append(ChatColor.LIGHT_PURPLE).append("[");
         if (sender instanceof ConsoleCommandSender) {
-            message.append("Server");
+            message.append("Сервер");
         } else if (sender instanceof Player) {
             message.append(((Player) sender).getDisplayName());
         } else {

@@ -3,6 +3,7 @@ package org.bukkit.command.defaults;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,14 +16,15 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.util.StringUtil;
 
 public class SpreadPlayersCommand extends VanillaCommand {
     private static final Random random = new Random();
 
     public SpreadPlayersCommand() {
         super("spreadplayers");
-        this.description = "Spreads players around a point";
-        this.usageMessage = "/spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams true|false> <player ...>";
+        this.description = "Распостранение игроков вокруг точки";
+        this.usageMessage = "/spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams true|false> <игрок ...>";
         this.setPermission("bukkit.command.spreadplayers");
     }
 
@@ -33,7 +35,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
         }
 
         if (args.length < 6) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+            sender.sendMessage(ChatColor.RED + "Использование: " + usageMessage);
             return false;
         }
 
@@ -43,12 +45,12 @@ public class SpreadPlayersCommand extends VanillaCommand {
         final double range = getDouble(sender, args[3]);
 
         if (distance < 0.0D) {
-            sender.sendMessage(ChatColor.RED + "Distance is too small.");
+            sender.sendMessage(ChatColor.RED + "Расстояние слишком маленькое.");
             return false;
         }
 
         if (range < distance + 1.0D) {
-            sender.sendMessage(ChatColor.RED + "Max range is too small.");
+            sender.sendMessage(ChatColor.RED + "Максимальное расстояние слишком мало.");
             return false;
         }
 
@@ -58,7 +60,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
         if (respectTeams.equalsIgnoreCase("true")) {
             teams = true;
         } else if (!respectTeams.equalsIgnoreCase("false")) {
-            sender.sendMessage(String.format(ChatColor.RED + "'%s' is not true or false", args[4]));
+            sender.sendMessage(String.format(ChatColor.RED + "'%s' может быть только true или false", args[4]));
             return false;
         }
 
@@ -92,15 +94,15 @@ public class SpreadPlayersCommand extends VanillaCommand {
         final int rangeSpread = range(world, distance, xRangeMin, zRangeMin, xRangeMax, zRangeMax, locations);
 
         if (rangeSpread == -1) {
-            sender.sendMessage(String.format("Could not spread %d %s around %s,%s (too many players for space - try using spread of at most %s)", spreadSize, teams ? "teams" : "players", x, z));
+            sender.sendMessage(String.format("Ошибка распостранения игроков %d %s вокруг %s,%s (слишком много игроков для данной территории - попробуйте увеличить разброс)", spreadSize, teams ? "teams" : "players", x, z));
             return false;
         }
 
         final double distanceSpread = spread(world, players, locations, teams);
 
-        sender.sendMessage(String.format("Succesfully spread %d %s around %s,%s", locations.length, teams ? "teams" : "players", x, z));
+        sender.sendMessage(String.format("%d %s вокруг %s,%s", locations.length, teams ? StringUtil.plural(locations.length, "команда была разбросана", "команды были разбросаны", "доманд было разбросано") : StringUtil.plural(locations.length, "игрок был расбросан", "игрока было разбросано", "игроков было разбросано"), x, z));
         if (locations.length > 1) {
-            sender.sendMessage(String.format("(Average distance between %s is %s blocks apart after %s iterations)", teams ? "teams" : "players",  String.format("%.2f", distanceSpread), rangeSpread));
+            sender.sendMessage(String.format("(Среднее расстояние между %s %s блоков после %s итераций)", teams ? "командами" : "игроками", String.format("%.2f", distanceSpread), rangeSpread));
         }
         return true;
     }
