@@ -118,6 +118,10 @@ public class CreatureSpawnEvent extends EntitySpawnEvent {
          */
         SLIME_SPLIT,
         /**
+         * When an entity calls for reinforcements
+         */
+        REINFORCEMENTS,
+        /**
          * When a creature is spawned by plugins
          */
         CUSTOM,

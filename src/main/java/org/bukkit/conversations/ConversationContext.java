@@ -27,6 +27,7 @@ public class ConversationContext {
 
     /**
      * Gets the plugin that owns this conversation.
+     *
      * @return The owning plugin.
      */
     public Plugin getPlugin() {
@@ -35,6 +36,7 @@ public class ConversationContext {
 
     /**
      * Gets the subject of the conversation.
+     *
      * @return The subject of the conversation.
      */
     public Conversable getForWhom() {
@@ -42,8 +44,17 @@ public class ConversationContext {
     }
 
     /**
+     * Gets the entire sessionData map.
+     * @return The full sessionData map.
+     */
+    public Map<Object, Object> getAllSessionData() {
+        return sessionData;
+    }
+
+    /**
      * Gets session data shared between all {@link Prompt} invocations. Use this as a way
      * to pass data through each Prompt as the conversation develops.
+     *
      * @param key The session data key.
      * @return The requested session data.
      */
@@ -54,6 +65,7 @@ public class ConversationContext {
     /**
      * Sets session data shared between all {@link Prompt} invocations. Use this as a way to pass
      * data through each prompt as the conversation develops.
+     *
      * @param key The session data key.
      * @param value The session data value.
      */

@@ -16,7 +16,7 @@ public class TimedRegisteredListener extends RegisteredListener {
     public long curTickTotal = 0;
     public long violations = 0;
     // Spigot end
-    private Event event;
+    private Class<? extends Event> eventClass;
     private boolean multiple = false;
 
     public TimedRegisteredListener(final Listener pluginListener, final EventExecutor eventExecutor, final EventPriority eventPriority, final Plugin registeredPlugin, final boolean listenCancelled) {
@@ -26,7 +26,7 @@ public class TimedRegisteredListener extends RegisteredListener {
     @Override
     public void callEvent(Event event) throws EventException {
         // Spigot start
-        if ( !org.bukkit.Bukkit.getServer().getPluginManager().useTimings() )
+        if ( org.bukkit.Bukkit.getServer() != null && !org.bukkit.Bukkit.getServer().getPluginManager().useTimings() )
         {
             super.callEvent( event );
             return;
@@ -37,11 +37,12 @@ public class TimedRegisteredListener extends RegisteredListener {
             return;
         }
         count++;
-        if (this.event == null) {
-            this.event = event;
-        }
-        else if (!this.event.getClass().equals(event.getClass())) {
+        Class<? extends Event> newEventClass = event.getClass();
+        if (this.eventClass == null) {
+            this.eventClass = newEventClass;
+        } else if (!this.eventClass.equals(newEventClass)) {
             multiple = true;
+            this.eventClass = getCommonSuperclass(newEventClass, this.eventClass).asSubclass(Event.class);
         }
         long start = System.nanoTime();
         super.callEvent(event);
@@ -50,6 +51,13 @@ public class TimedRegisteredListener extends RegisteredListener {
         curTickTotal += diff;
         totalTime += diff;
         // Spigot end
+    }
+
+    private static Class<?> getCommonSuperclass(Class<?> class1, Class<?> class2) {
+        while (!class1.isAssignableFrom(class2)) {
+            class1 = class1.getSuperclass();
+        }
+        return class1;
     }
 
     /**
@@ -83,18 +91,26 @@ public class TimedRegisteredListener extends RegisteredListener {
     }
 
     /**
-     * Gets the first event this listener handled
+     * Gets the class of the events this listener handled. If it handled
+     * multiple classes of event, the closest shared superclass will be
+     * returned, such that for any event this listener has handled,
+     * <code>this.getEventClass().isAssignableFrom(event.getClass())</code>
+     * and no class
+     * <code>this.getEventClass().isAssignableFrom(clazz)
+     * && this.getEventClass() != clazz &&
+     * event.getClass().isAssignableFrom(clazz)</code> for all handled events.
      *
-     * @return An event handled by this RegisteredListener
+     * @return the event class handled by this RegisteredListener
      */
-    public Event getEvent() {
-        return event;
+    public Class<? extends Event> getEventClass() {
+        return eventClass;
     }
 
     /**
-     * Gets whether this listener has handled multiple events
+     * Gets whether this listener has handled multiple events, such that for
+     * some two events, <code>eventA.getClass() != eventB.getClass()</code>.
      *
-     * @return True if this listener has handled multiple events
+     * @return true if this listener has handled multiple events
      */
     public boolean hasMultiple() {
         return multiple;

@@ -1,5 +1,6 @@
 package org.bukkit;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -27,6 +29,7 @@ import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.plugin.messaging.PluginMessageRecipient;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.util.CachedServerIcon;
 
 import com.avaje.ebean.config.ServerConfig;
 import org.bukkit.inventory.ItemFactory;
@@ -36,6 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * Represents a server implementation
  */
 public interface Server extends PluginMessageRecipient {
+
     /**
      * Used for all administrative messages, such as an operator using a command.
      * <p>
@@ -356,7 +360,9 @@ public interface Server extends PluginMessageRecipient {
      *
      * @param id ID of the map to get.
      * @return The MapView if it exists, or null otherwise.
+     * @deprecated Magic value
      */
+    @Deprecated
     public MapView getMap(short id);
 
     /**
@@ -608,6 +614,7 @@ public interface Server extends PluginMessageRecipient {
      * Creates an empty inventory of the specified type. If the type is {@link InventoryType#CHEST},
      * the new inventory has a size of 27; otherwise the new inventory has the normal size for
      * its type.
+     *
      * @param owner The holder of the inventory; can be null if there's no holder.
      * @param type The type of inventory to create.
      * @return The new inventory.
@@ -616,6 +623,7 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Creates an empty inventory of type {@link InventoryType#CHEST} with the specified size.
+     *
      * @param owner The holder of the inventory; can be null if there's no holder.
      * @param size The size of inventory to create; must be a multiple of 9.
      * @return The new inventory.
@@ -625,6 +633,7 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Creates an empty inventory of type {@link InventoryType#CHEST} with the specified size and title.
+     *
      * @param owner The holder of the inventory; can be null if there's no holder.
      * @param size The size of inventory to create; must be a multiple of 9.
      * @param title The title of the inventory, to be displayed when it is viewed.
@@ -635,24 +644,28 @@ public interface Server extends PluginMessageRecipient {
 
     /**
      * Gets user-specified limit for number of monsters that can spawn in a chunk
+     *
      * @return The monster spawn limit
      */
     int getMonsterSpawnLimit();
 
     /**
      * Gets user-specified limit for number of animals that can spawn in a chunk
+     *
      * @return The animal spawn limit
      */
     int getAnimalSpawnLimit();
 
     /**
      * Gets user-specified limit for number of water animals that can spawn in a chunk
+     *
      * @return The water animal spawn limit
      */
     int getWaterAnimalSpawnLimit();
 
     /**
      * Gets user-specified limit for number of ambient mobs that can spawn in a chunk
+     *
      * @return The ambient spawn limit
      */
     int getAmbientSpawnLimit();
@@ -699,4 +712,44 @@ public interface Server extends PluginMessageRecipient {
      * @return the scoreboard manager or null if no worlds are loaded.
      */
     ScoreboardManager getScoreboardManager();
+
+    /**
+     * Gets an instance of the server's default server-icon.
+     *
+     * @return the default server-icon; null values may be used by the
+     *     implementation to indicate no defined icon, but this behavior is
+     *     not guaranteed
+     */
+    CachedServerIcon getServerIcon();
+
+    /**
+     * Loads an image from a file, and returns a cached image for the
+     * specific server-icon.
+     * <p>
+     * Size and type are implementation defined. An incompatible file is
+     * guaranteed to throw an implementation-defined {@link Exception}.
+     *
+     * @param file the file to load the from
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception if the image does not meet current server
+     *     server-icon specifications
+     * @return a cached server-icon that can be used for a {@link
+     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     */
+    CachedServerIcon loadServerIcon(File file) throws IllegalArgumentException, Exception;
+
+    /**
+     * Creates a cached server-icon for the specific image.
+     * <p>
+     * Size and type are implementation defined. An incompatible file is
+     * guaranteed to throw an implementation-defined {@link Exception}.
+     *
+     * @param image the image to use
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception if the image does not meet current server
+     *     server-icon specifications
+     * @return a cached server-icon that can be used for a {@link
+     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     */
+    CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception;
 }
