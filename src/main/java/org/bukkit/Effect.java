@@ -69,7 +69,8 @@ public enum Effect {
      */
     STEP_SOUND(2001, Type.SOUND, Material.class),
     /**
-     * Visual effect of a splash potion breaking. Needs potion data value as additional info.
+     * Visual effect of a splash potion breaking. Needs potion data value as
+     * additional info.
      */
     POTION_BREAK(2002, Type.VISUAL, Potion.class),
     /**
@@ -213,7 +214,7 @@ public enum Effect {
      * The particles generated while breaking a block.
      * This particle requires a Material and data value so that the client can select the correct texture.
      */
-    TILE_BREAK("tilecrack", Type.PARTICLE, MaterialData.class);
+    TILE_BREAK("blockcrack", Type.PARTICLE, MaterialData.class);
 
     private final int id;
     private final Type type;
