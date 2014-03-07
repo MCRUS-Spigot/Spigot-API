@@ -207,7 +207,7 @@ public final class PluginDescriptionFile {
      * @param mainClass Full location of the main class of this plugin
      */
     public PluginDescriptionFile(final String pluginName, final String pluginVersion, final String mainClass) {
-        name = pluginName;
+        name = pluginName.replace(' ', '_');
         version = pluginVersion;
         main = mainClass;
     }
@@ -537,7 +537,9 @@ public final class PluginDescriptionFile {
      *     <td>Alternative command names, with special usefulness for commands
      *         that are already registered. <i>Aliases are not effective when
      *         defined at runtime,</i> so the plugin description file is the
-     *         only way to have them properly defined.</td>
+     *         only way to have them properly defined.
+     *         <p>
+     *         Note: Command aliases may not have a colon in them.</td>
      *     <td>Single alias format:
      *         <blockquote><pre>aliases: combust_me</pre></blockquote> or
      *         multiple alias format:
@@ -617,6 +619,7 @@ public final class PluginDescriptionFile {
      *  # Having an empty declaration is useful for defining the description, permission, and messages from a configuration dynamically
      *  apocalypse:
      *</pre></blockquote>
+     * Note: Command names may not have a colon in their name.
      *
      * @return the commands this plugin will register
      */
@@ -773,6 +776,10 @@ public final class PluginDescriptionFile {
         return name + " v" + version;
     }
 
+    /**
+     * @deprecated unused
+     */
+    @Deprecated
     public String getClassLoaderOf() {
         return classLoaderOf;
     }
@@ -797,6 +804,7 @@ public final class PluginDescriptionFile {
             if (!name.matches("^[A-Za-z0-9 _.-]+$")) {
                 throw new InvalidDescriptionException("name '" + name + "' contains invalid characters.");
             }
+            name = name.replace(' ', '_');
         } catch (NullPointerException ex) {
             throw new InvalidDescriptionException(ex, "name is not defined");
         } catch (ClassCastException ex) {

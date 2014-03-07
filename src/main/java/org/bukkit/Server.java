@@ -573,6 +573,14 @@ public interface Server extends PluginMessageRecipient {
     public Set<OfflinePlayer> getBannedPlayers();
 
     /**
+     * Gets a BanList for the supplied BanList Type
+     *
+     * @param type The BanList Type to fetch, cannot be null
+     * @return the BanList of the specified type
+     */
+    public BanList getBanList(BanList.Type type);
+
+    /**
      * Gets a set containing all player operators
      *
      * @return Set containing player operators
@@ -782,4 +790,27 @@ public interface Server extends PluginMessageRecipient {
      *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
      */
     CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception;
+
+    /**
+     * Set the idle kick timeout. Any players idle for the specified amount of
+     * time will be automatically kicked.
+     * <p>
+     * A value of 0 will disable the idle kick timeout.
+     *
+     * @param threshold the idle timeout in minutes
+     */
+    public void setIdleTimeout(int threshold);
+
+    /**
+     * Gets the idle kick timeout.
+     *
+     * @return the idle timeout in minutes
+     */
+    public int getIdleTimeout();
+
+    /**
+     * @see UnsafeValues
+     */
+    @Deprecated
+    UnsafeValues getUnsafe();
 }

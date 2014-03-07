@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -30,7 +31,7 @@ public class PardonCommand extends VanillaCommand {
         }
 
         Bukkit.getOfflinePlayer(args[0]).setBanned(false);
-        Command.broadcastCommandMessage(sender, "Игрок " + args[0] + " теперь может заходить на сервер.");
+        Command.broadcastCommandMessage(sender, "Pardoned " + args[0]);
         return true;
     }
 

@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class HelpCommand extends VanillaCommand {
         super("help");
         this.description = "Показывает меню помощи";
         this.usageMessage = "/help <номер страницы>\n/help <тема>\n/help <тема> <номер страницы>";
+        this.setAliases(Arrays.asList(new String[] { "?" }));
         this.setPermission("bukkit.command.help");
     }
 
@@ -107,11 +109,6 @@ public class HelpCommand extends VanillaCommand {
         sender.sendMessage(page.getLines());
 
         return true;
-    }
-
-    @Override
-    public boolean matches(String input) {
-        return input.equalsIgnoreCase("help") || input.equalsIgnoreCase("?");
     }
 
     @Override

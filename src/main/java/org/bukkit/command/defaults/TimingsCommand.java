@@ -54,12 +54,13 @@ public class TimingsCommand extends BukkitCommand {
         // Spigot start - dynamic enable
         if ( "on".equals( args[0] ) )
         {
-            ( (org.bukkit.plugin.SimplePluginManager) Bukkit.getPluginManager() ).useTimings( true );
-            sender.sendMessage( "Enabled Timings" );
+            // ( (org.bukkit.plugin.SimplePluginManager) Bukkit.getPluginManager() ).useTimings( true );
+            sender.sendMessage( ChatColor.RED + "This command is disabled as it does not produce accurate results. Please enable plugin-profiling in bukkit.yml and restart." );
+            sender.sendMessage( ChatColor.RED + "Please see http://www.spigotmc.org/wiki/disabled-timings-on-command/ for further information." );
         } else if ( "off".equals( args[0] ) )
         {
-            ( (org.bukkit.plugin.SimplePluginManager) Bukkit.getPluginManager() ).useTimings( false );
-            sender.sendMessage( "Disabled Timings" );
+            sender.sendMessage( ChatColor.RED + "This command is disabled as it does not produce accurate results. Please disable plugin-profiling in bukkit.yml and restart." );
+            sender.sendMessage( ChatColor.RED + "Please see http://www.spigotmc.org/wiki/disabled-timings-on-command/ for further information." );
         }
         // Spigot end
 
