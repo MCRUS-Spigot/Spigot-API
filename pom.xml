@@ -4,7 +4,7 @@
 
     <groupId>org.spigotmc</groupId>
     <artifactId>spigot-api</artifactId>
-    <version>1.7.5-R0.1SNAPSHOT</version>
+    <version>1.7.5-R0.1-SNAPSHOT</version>
     <name>Spigot-API</name>
     <url>http://www.spigotmc.org</url>
 
